@@ -15,7 +15,7 @@ $(document).ready(function() {
         var model = $("#step-" + next_step + " select").attr("model");
         var field =  $("#step-" + next_step + " select").attr("field");
         // first retrieve data for next step
-        $.get("/admin/options/index/"+model+"/"+field+"/"+value, function(data) {
+        $.get("/admin/admin_select_steps/options/index/"+model+"/"+field+"/"+value, function(data) {
             $("#step-" + next_step + " select").html(data);
         });
         // then show the next step

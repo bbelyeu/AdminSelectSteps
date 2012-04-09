@@ -4,7 +4,11 @@ Dynamically loads the next select option based on the previous selection.
 *REQUIRES:
 jQuery
 
+Setup Steps:
+1. Add the following line at the bottom of app/Config/bootstrap.php
+    CakePlugin::load('AdminSelectSteps');
 
+2. Add the js file "/admin_select_steps/js/adminselectsteps.js" to your view
 
 Link for help using the plugins elements:
 http://book.cakephp.org/2.0/en/plugins.html
