@@ -1,5 +1,10 @@
 CakePhp 2.x Plugin for admin screens with multiple large selects.
 Dynamically loads the next select option based on the previous selection.
 
+*REQUIRES:
+jQuery
+
+
+
 Link for help using the plugins elements:
 http://book.cakephp.org/2.0/en/plugins.html
