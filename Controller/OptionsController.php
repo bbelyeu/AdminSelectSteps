@@ -23,5 +23,6 @@ class OptionsController extends AdminSelectStepsAppController
             $params['conditions'] = array("$model.$field" => $condition);
         }
         $this->set('list', $instance->find('list', $params));
+        $this->layout = 'AdminSelectSteps.default';
     }
 }
