@@ -1,4 +1,4 @@
-CakePhp 2.x Plugin for admin screens with multiple large selects.
+CakePhp 2.1 Plugin for admin screens with multiple large selects.
 Dynamically loads the next select option based on the previous selection.
 
 *REQUIRES:
@@ -8,7 +8,58 @@ Setup Steps:
 1. Add the following line at the bottom of app/Config/bootstrap.php
     CakePlugin::load('AdminSelectSteps');
 
-2. Add the js file "/admin_select_steps/js/adminselectsteps.js" to your view
+2. Modify the Controller that you'd like to use the plugin with. Normally, 
+    the admin_add & admin_edit methods are the only 2 that need to be modified.
+    Comment out any unnecessary load list calls that will be replaced by the plugin,
+    and verify that the step-1 data you need is being set for the view.
+
+3. Make sure your layout where the plugin is being used includes the following
+    2 lines in the html <head>:
+    echo $this->fetch('css');
+    echo $this->fetch('script');
+
+4. At the top of each view file you're going to use the plugin with
+    add the following 2 lines:
+    $this->Html->script('AdminSelectSteps.adminselectsteps.js', array('inline' => false));
+    $this->Html->css('AdminSelectSteps.adminselectsteps.css', null, array('inline' => false));
+
+5. Comment out the default lines that the Cake Bake added for the form helper to
+    display the fields you'd like to use with the plugin.
+
+6. Manually add the html for the form fields. The container div must have the id
+    indicating which step in the process it is (ex #step-1, #step-2, etc).
+    Each <select> after #step-1 must have 2 custom attributes: model & field.
+    This tells the plugin controller which model to query to populate the next select
+    and the field tells it what the foreign key is to limit the query by.
+    For example:
+    <div id="step-1" class="clearfix">
+        <label for="ModelStateId">State</label>
+        <div class="input added">
+            <select name="data[Model][state_id]" id="ModelStateId">
+                <option value="">(choose a state)</option>
+            <?php foreach ($states as $id => $name):
+                ?><option value="<?php echo $id ?>"><?php echo $name ?></option><?php
+            endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div id="step-2" class="clearfix">
+        <label for="ModelCityId">City</label>
+        <div class="input added">
+            <select id="ModelCityId" model="City" field="state_id" name="data[Model][city_id]">
+            </select>
+        </div>
+    </div>
+    <div id="step-3" class="clearfix">
+        <label for="ModelZipId">Zip</label>
+        <div class="input added">
+            <select id="ModelZipId" model="Zip" field="city_id" name="data[Model][zip_id]">
+            </select>
+        </div>
+    </div>
+
+    *** Javascript will call the server with the state_id and get back a list of
+    cities from the city model. Same goes for getting the zips in a city.
 
 Link for help using the plugins elements:
 http://book.cakephp.org/2.0/en/plugins.html
